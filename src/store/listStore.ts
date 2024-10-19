@@ -12,6 +12,7 @@ export type ListItems = {
   id: string;
   name: string;
   checked: boolean;
+  amount: number;
 };
 
 export const useListStore = defineStore("shoppingList", () => {
@@ -29,11 +30,18 @@ export const useListStore = defineStore("shoppingList", () => {
 
   const addToList = (listId: string, itemValue: string) => {
     const list = shoppingList.value.find((list) => list.id === listId);
-    list?.items.push({
-      id: useUUID("listItem-xxxxxx"),
-      name: itemValue,
-      checked: false,
-    });
+    // if it exists in the list, plus the amount
+    const item = list?.items.find((item) => item.name === itemValue);
+    if (item) {
+      item.amount++;
+    } else {
+      list?.items.push({
+        name: itemValue,
+        checked: false,
+        amount: 1,
+        id: useUUID("item-xxxxxx"),
+      });
+    }
   };
 
   const removeFromList = (listId: string, itemId: string) => {

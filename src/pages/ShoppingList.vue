@@ -1,7 +1,7 @@
 <template>
   <div v-if="list">
     <h1>Shopping list</h1>
-    <p>{{ list }}</p>
+    LIST:<p>{{ list }}</p>
     <input type="text" v-model="inputItem" @keyup.enter="addToList(inputItem)" />
     <ul>
       <li v-for="item in searchAutoComplete" :key="item">
@@ -22,6 +22,7 @@
         </button>
       </li>
     </ul>
+    <br>
     <br>
     <hr>
     <h2>Search List</h2>
