@@ -4,11 +4,11 @@ import { ref } from "vue";
 export type ShoppingList = {
   id: string;
   name: string;
-  items: ListItems[];
+  items: ListItem[];
   printed: boolean;
 };
 
-export type ListItems = {
+export type ListItem = {
   id: string;
   name: string;
   checked: boolean;
@@ -27,6 +27,14 @@ export const useListStore = defineStore("shoppingList", () => {
       items: [],
     });
   };
+
+  const removeShoppingList = (listId: string) => {
+    // remove specific list from the list with ids
+    const index = shoppingList.value.findIndex((list) => list.id === listId);
+    if (index !== undefined && index !== -1) {
+      shoppingList.value.splice(index, 1);
+    }
+  }
 
   const addToList = (listId: string, itemValue: string) => {
     const list = shoppingList.value.find((list) => list.id === listId);
@@ -71,7 +79,8 @@ export const useListStore = defineStore("shoppingList", () => {
     removeFromList,
     getList,
     searchList,
-    addToSearchList
+    addToSearchList,
+    removeShoppingList
   };
 },
 {
